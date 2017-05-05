@@ -1,0 +1,32 @@
+<ion-view view-title="全部电影">
+  <ion-content class="all-film">
+    <div class="toggle-wrap">
+      <p>
+        <span ng-class="{'choose-hot':hotClass}" ng-click="activeSlide(0)">正在热映</span>
+        <span ng-class="{'choose-coming':comingClass}" ng-click="activeSlide(1)">即将上映</span>
+      </p>
+    </div>
+    <span class="divider"></span>
+    <ion-list ng-show="hotClass">
+      <ion-item class="list-hot" ng-repeat="item in hot" ng-click="goDetail(item.id)">
+        <img ng-src="{{item.img}}"  />
+        <div class="right">
+          <h3 ng-bind="item.nm"></h3>
+          <div class="film-desc" ng-bind="item.scm"></div>
+          <p><span class="score" ng-bind="item.sc"></span>
+            <button class="button button-assertive btn-buy">购买</button></p>
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-list ng-show="comingClass">
+      <ion-item class="list-hot" ng-repeat="item in coming" ng-click="goDetail(item.id)">
+        <img ng-src="{{item.img}}" />
+        <div class="right">
+          <h3 ng-bind="item.nm"></h3>
+          <div class="film-desc" ng-bind="item.scm"></div>
+          <p><span ng-bind="item.rt"></span><button class="button button-assertive btn-buy">预售</button></p>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

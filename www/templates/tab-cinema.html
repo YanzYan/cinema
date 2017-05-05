@@ -1,0 +1,31 @@
+<ion-view view-title="电影院">
+  <ion-content class="film">
+    <div class="content-top">
+      <span class="icon ion-ios-location-outline"> 上海</span>
+      <div class="list list-inset search">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="请输入影院名或地址" ui-sref="tab.cinema-search">
+        </label>
+      </div>
+    </div>
+    <span class="divider"></span>
+    <div class="list list-title">
+      <a class="item">推荐影院
+        <select class="item-note all" ng-options="x for (x, y) in data" ng-model="selectedSite">
+        </select>
+      </a>
+    </div>
+    <ion-list>
+      <ion-item class="cinema" ng-repeat="item in selectedSite" ng-click="goCinemaDetail(item.id)" >
+        <h4 class="title" ng-bind="item.nm"></h4>
+        <p class="line">
+          <span class="left ellipsis" ng-bind="item.addr"></span>
+          <span class="right" ng-bind="item.dis"></span>
+        </p>
+        <p><span class="price" ng-bind="item.sellPrice | number:2 | currency:'￥'"></span> 起</p>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,40 @@
+<ion-view view-title="场次选择" hide-nav-bar="true">
+  <ion-header-bar align-title="center" class="bar-positive">
+    <button ng-click="$ionicGoBack()" class="button back-button buttons button-clear header-item">
+      <i class="icon ion-ios-arrow-back"></i>
+      <span class="back-text" style="transform: translate3d(0px, 0px, 0px);"><span class="default-title">返回</span></span>
+    </button>
+    <h1 class="title">场次选择</h1>
+  </ion-header-bar>
+
+  <ion-content class="cinema-detail">
+    <div class="content-top">
+      <p ng-bind="cinema.cinemaDetailModel.nm" class="title"></p>
+      <p ng-bind="cinema.cinemaDetailModel.addr" class="icon ion-ios-location address"></p>
+      <p class="icon ion-ios-telephone tel" ng-bind="cinema.cinemaDetailModel.tel[0]"> 021-654123456</p>
+    </div>
+      <ion-scroll direction="x" scrollbar-x="false" style="background-color: #D9D9D9;">
+        <div class="wrap-img">
+          <img ng-repeat="item in movieValue" ng-src="{{item.img}}" ng-click="choose(item.movieId)"
+               ng-class="{'choose-film':chooseclass}" />
+        </div>
+      </ion-scroll>
+    <div>
+      <p class="film-title"><span ng-bind="movieValue[0].nm"></span><span class="score">8.0</span></p>
+      <ion-scroll class="date" direction="x" scrollbar-x="false">
+        <div class="film-date">
+          <film-date ng-repeat="item in value" ng-bind="item.text"></film-date>
+        </div>
+      </ion-scroll>
+      <ion-list>
+        <ion-item class="date-detail" >
+          <p><span class="first-line black">15:25</span><br><span class="sub-line">18:25结束</span></p>
+          <p><span class="first-line">国语/3D</span><br><span class="sub-line">3号厅</span></p>
+          <p><span class="first-line red"> 59.4 </span><br><span class="sub-line line-through">120</span></p>
+          <p><button class="button button-assertive btn-buy">购票</button></p>
+        </ion-item>
+      </ion-list>
+    </div>
+
+  </ion-content>
+</ion-view>

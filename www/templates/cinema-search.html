@@ -1,0 +1,28 @@
+<ion-view view-title="影院搜索列表">
+  <ion-content class="film-search">
+
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon  ion-ios-search-strong placeholder-icon"></i>
+        <input type="search" placeholder="搜索" ng-model="searchCont.key" ng-change="search()" autofocus="autofocus">
+        <i class="icon ion-close-circled placeholder-icon" style="vertical-align: middle;"
+           ng-click="clearSearch()" ng-if="searchCont.key.length"></i>
+      </label>
+    </div>
+    <ion-list>
+      <ion-item class="cinema" ng-repeat="item in ItemArr2" ng-click="goCinemaDetail(item.id)" >
+        <h4 class="title" ng-bind="item.nm"></h4>
+        <p class="line">
+          <span class="left ellipsis" ng-bind="item.addr"></span>
+          <span class="right" ng-bind="item.dis"></span>
+        </p>
+        <p><span class="price" ng-bind="item.sellPrice | number:2 | currency:'￥'"></span> 起</p>
+      </ion-item>
+    </ion-list>
+
+    <div class="box-none" ng-if="box">
+      <img src="img/none.png"/>
+      <p>对不起，未找到相关影院</p>
+    </div>
+  </ion-content>
+</ion-view>

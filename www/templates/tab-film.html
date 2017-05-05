@@ -1,0 +1,62 @@
+<ion-view view-title="看电影">
+  <ion-content class="film">
+    <div class="content-top">
+      <span class="icon ion-ios-location-outline" ng-click="getLocation()" ng-bind="addr"></span>
+      <div class="list list-inset search">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="请输入电影名" ng-click="goFilmSearch()">
+        </label>
+      </div>
+    </div>
+    <span class="divider"></span>
+    <div class="list list-title" ng-click="goFilmList()">
+      <a class="item">正在热映<span class="item-note all">全部
+        <i class="icon ion-ios-arrow-forward"></i></span></a>
+    </div>
+    <div class="hot-film">
+      <div ng-repeat="item in hot" ng-click="goFilmDetail(item.id)">
+        <img ng-src="{{item.img}}"/>
+        <p class="ellipsis" ng-bind="item.nm"></p>
+      </div>
+    </div>
+    <span class="divider"></span>
+    <div class="list list-title" ng-click="goFilmList(1)">
+      <a class="item">即将上映<span class="item-note all">全部
+        <i class="icon ion-ios-arrow-forward"></i></span></a>
+    </div>
+    <div class="coming-film">
+      <div ng-repeat="item in coming" ng-click="goFilmDetail(item.id)">
+        <img src="{{item.img}}"/>
+        <p class="ellipsis" ng-bind="item.nm"></p>
+        <p ng-bind="item.rt"></p>
+      </div>
+    </div>
+    <span class="divider"></span>
+    <div class="list list-title">
+      <!--<a class="item" href="#">推荐影院<span class="item-note all">区域-->
+        <!--<i class="icon ion-chevron-down"></i></span></a>-->
+      <a class="item">推荐影院
+        <select class="item-note all" ng-options="x for (x, y) in data" ng-model="selectedSite"></select>
+      </a>
+    </div>
+      <!--<a class="item" href="#">推荐影院-->
+        <!--<select class="item-note all">区域-->
+          <!--<option>Blue</option>-->
+          <!--<option>Green</option>-->
+          <!--<option>Red</option>-->
+        <!--</select>-->
+      <!--</a>-->
+    <ion-list>
+      <ion-item class="cinema" ng-repeat="item in selectedSite" ng-click="goCinemaDetail(item.id)" >
+        <h4 class="title" ng-bind="item.nm"></h4>
+        <p class="line">
+          <span class="left ellipsis" ng-bind="item.addr"></span>
+          <span class="right" ng-bind="item.dis"></span>
+        </p>
+        <p><span class="price" ng-bind="item.sellPrice | number:2 | currency:'￥'"></span> 起</p>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

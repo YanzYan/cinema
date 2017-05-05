@@ -1,0 +1,29 @@
+<ion-view view-title="影片搜索列表">
+  <ion-content class="film-search">
+
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon  ion-ios-search-strong placeholder-icon"></i>
+        <input type="search" placeholder="搜索" ng-model="searchCont.key" ng-change="search()" autofocus="autofocus">
+        <i class="icon ion-close-circled placeholder-icon" style="vertical-align: middle;"
+           ng-click="clearSearch()" ng-if="searchCont.key.length"></i>
+      </label>
+    </div>
+    <ion-list class="all-film">
+      <ion-item class="list-hot" ng-repeat="item in ItemArr2">
+        <img ng-src="{{item.img}}"  />
+        <div class="right">
+          <h3 ng-bind="item.nm"></h3>
+          <div class="film-desc" ng-bind="item.scm"></div>
+          <p><span class="score" ng-bind="item.sc"></span>
+          <button class="button button-assertive btn-buy"  ng-click="goDetail(item.id)">购票</button></p>
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <div class="box-none" ng-if="box">
+      <img src="img/none.png"/>
+      <p>对不起，未找到相关电影</p>
+    </div>
+  </ion-content>
+</ion-view>

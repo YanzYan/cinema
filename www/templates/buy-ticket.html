@@ -1,0 +1,58 @@
+<ion-view hide-nav-bar="true">
+  <ion-header-bar align-title="center" class="bar-positive">
+    <button ng-click="$ionicGoBack()" class="button back-button buttons button-clear header-item">
+      <i class="icon ion-ios-arrow-back"></i>
+      <span class="back-text" style="transform: translate3d(0px, 0px, 0px);"><span class="default-title">返回</span></span>
+    </button>
+    <h1 class="title">购票</h1>
+  </ion-header-bar>
+  <ion-content class="film-detail">
+    <div class="refocus" id="hero-header">
+      <div class="refocus-img-bg"></div>
+      <!--带focus-in的容器中的内容将被模糊处理-->
+      <div class="refocus-img focus-in">
+        <img src="img/film.jpg">
+      </div>
+      <!--带focus-out的容器中的内容不会变模糊-->
+      <div class="refocus-text-container">
+        <div class="t">
+          <div class="tc">
+            <!--<h1 class="focus-out">I'm a 'Hero' header.</h1>-->
+            <div class="focus-out">
+              <div class="content-top">
+                <img src="img/film.jpg"/>
+                <div class="right">
+                  <div class="ellipsis"><h3>疯狂动物城</h3><span class="desc">Zootopia/Zootropolis</span></div>
+                  <div>
+                    <p class="row-desc"><span class="first-span">评分</span><span>9.1</span></p>
+                    <p class="row-desc"><span class="first-span">评分</span><span>9.1</span></p>
+                    <p class="row-desc"><span class="first-span">评分</span><span>9.1</span></p>
+                    <p class="row-desc"><span class="first-span">评分</span><span>9.1</span></p>
+                    <p class="row-desc"><span class="first-span">评分</span><span>9.1</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="divider"></span>
+    <div class="film">
+      <div class="list list-title">
+        <a class="item">推荐影院<span class="item-note ">区域
+        <i class="icon ion-chevron-down"></i></span></a>
+      </div>
+      <ion-list>
+        <ion-item class="cinema" ui-sref="tab.cinema-detail" ng-repeat="item in cinema">
+          <h4 class="title" ng-bind="item.name"></h4>
+          <p class="line">
+            <span class="left ellipsis" ng-bind="item.address"></span>
+            <span class="right" ng-bind="item.distance"></span>
+          </p>
+          <p><span class="price" ng-bind="item.price | number:2 | currency:'￥'"></span> 起</p>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-view>

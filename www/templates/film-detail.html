@@ -1,0 +1,69 @@
+<ion-view view-title="影片详情">
+  <ion-content class="film-detail has-footer">
+
+    <div class="refocus" id="hero-header">
+      <div class="refocus-img-bg"></div>
+      <!--带focus-in的容器中的内容将被模糊处理-->
+      <div class="refocus-img focus-in">
+        <img ng-src="{{filmData.img}}">
+      </div>
+      <!--带focus-out的容器中的内容不会变模糊-->
+      <div class="refocus-text-container">
+        <div class="t">
+          <div class="tc">
+            <!--<h1 class="focus-out">I'm a 'Hero' header.</h1>-->
+            <div class="focus-out">
+              <div class="content-top">
+                <img ng-src="{{filmData.img}}"/>
+                <div class="right">
+                  <div class="ellipsis"><h3 ng-bind="filmData.nm"></h3>
+                    <span class="desc" ng-bind="filmData.original_title"></span></div>
+                  <div>
+                    <p class="row-desc"><span class="first-span">评  分</span><span ng-bind="filmData.ver"></span></p>
+                    <p class="row-desc"><span class="first-span">类  型</span><span ng-bind="filmData.cat"></span></p>
+                    <p class="row-desc"><span class="first-span">想  看</span><span ng-bind="filmData.wish"></span></p>
+                    <p class="row-desc"><span class="first-span">片  长</span><span ng-bind="filmData.dur"></span></p>
+                    <p class="row-desc"><span class="first-span">上映时间</span><span ng-bind="filmData.rt"></span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="font-desc">
+      <div class="font-ellipsis" ng-bind="filmData.dra"></div>
+      <div style="text-align: center;padding-top: 0.2rem;"><expand></expand></div>
+    </div>
+    <video width="100%" height="240" controls>
+      <source src="http://maoyan.meituan.net/movie/videos/480x480e2dded1d5d4a4c5fbf01f9e45a5f2e69.mp4"  type="video/mp4">
+      <!--<source ng-src="{{filmData.vd}}"  type="video/mp4">-->
+      <!--<source src="http://www.runoob.com/try/demo_source/movie.ogg"  type="video/ogg">-->
+      您的浏览器不支持 HTML5 video 标签。
+    </video>
+    <!--<span class="divider"></span>-->
+    <div class="wrap-bottom">
+      <p class="title">演职人员</p>
+      <div>
+        <p ng-bind="'导演：' + filmData.dir"></p>
+        <p ng-bind="'主演：' + filmData.star"></p>
+      </div>
+
+      <!--<ion-scroll direction="x" scrollbar-x="false" class="scroll">-->
+        <!--<div class="person" ng-repeat="item in filmData.directors">-->
+          <!--<img ng-src="{{item.avatars.large}}"/>-->
+          <!--<p class='ellipsis' ng-bind="item.name"></p>-->
+          <!--<p>导演</p>-->
+        <!--</div>-->
+        <!--<div class="person" ng-repeat="item in filmData.casts">-->
+          <!--<img ng-src="{{item.avatars.large}}"/>-->
+          <!--<p class='ellipsis' ng-bind="item.name"></p>-->
+          <!--<p>主演</p>-->
+        <!--</div>-->
+      <!--</ion-scroll>-->
+    </div>
+  </ion-content>
+  <button type="button" ng-click="goBuyTicket(filmData.id)" style="position: fixed;bottom: 0;margin: 0;" class="button button-assertive button-block">购票</button>
+
+</ion-view>
