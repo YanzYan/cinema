@@ -1,13 +1,17 @@
 <ion-view view-title="看电影">
   <ion-content class="film">
     <div class="content-top">
-      <span class="icon ion-ios-location-outline" ng-click="getLocation()" ng-bind="addr"></span>
-      <div class="list list-inset search">
-        <label class="item item-input">
-          <i class="icon ion-search placeholder-icon"></i>
-          <input type="text" placeholder="请输入电影名" ng-click="goFilmSearch()">
-        </label>
+      <img src="img/yuantiao.jpg"/>
+      <div class="header-search">
+        <span class="icon ion-ios-location-outline" ng-click="getLocation()" ng-bind="addr"></span>
+        <div class="list list-inset search">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" placeholder="请输入电影名" ng-click="goFilmSearch()">
+          </label>
+        </div>
       </div>
+
     </div>
     <span class="divider"></span>
     <div class="list list-title" ng-click="goFilmList()">

@@ -1,7 +1,7 @@
 /**
  * Created by edianzu on 2017/4/27.
  */
-app.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+app.config(['$stateProvider', '$urlRouterProvider' ,'$ionicConfigProvider',function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
   $ionicConfigProvider.backButton.text("返回");
   $ionicConfigProvider.backButton.previousTitleText(false);
   $ionicConfigProvider.platform.android.tabs.position('bottom');
@@ -105,4 +105,4 @@ app.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/film');
 
-});
+}]);

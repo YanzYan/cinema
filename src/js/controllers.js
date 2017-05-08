@@ -1,6 +1,6 @@
 //angular.module('starter.controllers', [])
 
-app.controller('TabsCtrl',function($rootScope, $state){
+app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
     $rootScope.$on('$ionicView.beforeEnter', function () {
       $rootScope.hideTabs = false;
 //你想要显示的页面路由
@@ -8,9 +8,9 @@ app.controller('TabsCtrl',function($rootScope, $state){
         $rootScope.hideTabs = true;
       }
     });
-})
+}])
 
-  .controller('FilmCtrl',function($scope, $state , $http, $ionicLoading) {
+  .controller('FilmCtrl',['$scope', '$state', '$http', '$ionicLoading',function($scope, $state , $http, $ionicLoading) {
     loading();
     getAddr();
     function loading(){
@@ -75,9 +75,9 @@ app.controller('TabsCtrl',function($rootScope, $state){
     $scope.goFilmSearch = function(){
       $state.go('tab.film-search')
     }
-  })
+  }])
 
-.controller('CinemaCtrl', function($scope, $state, $ionicSlideBoxDelegate, $http, Cinema) {
+.controller('CinemaCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate', '$http', function($scope, $state, $ionicSlideBoxDelegate, $http) {
   $scope.selectedSite = 0;
   //存在跨域问题
   $http.get("https://m.maoyan.com/cinemas.json").success(function(response) {
@@ -94,9 +94,9 @@ app.controller('TabsCtrl',function($rootScope, $state){
       cinemaId: id
     })
   }
-})
+}])
 
-.controller('FilmDetailCtrl', function($scope,$http,$state,$ionicViewSwitcher,$stateParams,$ionicLoading,$sce) {
+.controller('FilmDetailCtrl', ['$scope','$http','$state','$ionicViewSwitcher','$stateParams','$ionicLoading','$sce',function($scope,$http,$state,$ionicViewSwitcher,$stateParams,$ionicLoading,$sce) {
   $scope.goBuyTicket = function(id){
     $state.go('buy-ticket',{
       id: id
@@ -129,15 +129,15 @@ app.controller('TabsCtrl',function($rootScope, $state){
         alert(mes);
       });
   }
-})
+}])
 
-  .controller('BuyTicketCtrl', function($scope,$ionicViewSwitcher,$stateParams) {
+  .controller('BuyTicketCtrl', ['$scope','$ionicViewSwitcher','$stateParams',function($scope,$ionicViewSwitcher,$stateParams) {
     $ionicViewSwitcher.nextDirection("forwoard");
     $scope.id = $stateParams.id;
     console.log($scope.id);
-  })
+  }])
 
-  .controller('CinemaDetailCtrl', function($scope, $state, $stateParams, $ionicSlideBoxDelegate, $http) {
+  .controller('CinemaDetailCtrl', ['$scope', '$state', '$stateParams', '$ionicSlideBoxDelegate', '$http',function($scope, $state, $stateParams, $ionicSlideBoxDelegate, $http) {
     $scope.slideIndex=0;
     $scope.slideChanged = function(index){
       $scope.slideIndex = index;
@@ -182,9 +182,9 @@ app.controller('TabsCtrl',function($rootScope, $state){
       $scope.chooseclass = true;
     }
 
-  })
+  }])
 
-  .controller('FilmListCtrl', function($scope, $state, $ionicSlideBoxDelegate, $http, $stateParams) {
+  .controller('FilmListCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate', '$http', '$stateParams',function($scope, $state, $ionicSlideBoxDelegate, $http, $stateParams) {
     $scope.$on('$ionicView.enter', function(e) {
       getDate();
     });
@@ -226,12 +226,12 @@ app.controller('TabsCtrl',function($rootScope, $state){
         id: id
       });
     }
-  })
+  }])
 
-  .controller('MineCtrl', function($scope) {
+  .controller('MineCtrl', ['$scope',function($scope) {
 
-  })
-  .controller('FilmSearchCtrl', function($scope,$http,$state) {
+  }])
+  .controller('FilmSearchCtrl', ['$scope','$http','$state',function($scope,$http,$state) {
     $scope.hot = [];
 
     getDate();
@@ -254,7 +254,7 @@ app.controller('TabsCtrl',function($rootScope, $state){
       $scope.ItemArr2 = []; //每次搜索先清空数组内容
       for (var i = 0; i < $scope.all.length; i++) {
         var num = i;
-        if ($scope.all[num].nm.indexOf($scope.searchCont.key) > 0) {
+        if ($scope.all[num].nm.indexOf($scope.searchCont.key) >= 0) {
           $scope.ItemArr2.push($scope.all[num]);
         }
       }
@@ -277,9 +277,9 @@ app.controller('TabsCtrl',function($rootScope, $state){
         console.log($scope.searchName)
         $scope.ItemArr2 = [];
       }
-  })
+  }])
 
-.controller('CinemaSearchCtrl', function($scope,$http,$state) {
+.controller('CinemaSearchCtrl', ['$scope','$http','$state',function($scope,$http,$state) {
 
   $http.get("https://m.maoyan.com/cinemas.json").success(function(response) {
     //$scope.data = response.data;
@@ -307,8 +307,8 @@ app.controller('TabsCtrl',function($rootScope, $state){
     $scope.box = false;
     $scope.ItemArr2 = []; //每次搜索先清空数组内容
     for (var i=0;i<$scope.data.length;i++){
-      if ($scope.data[i].nm.indexOf($scope.searchCont.key) > 0
-        || $scope.data[i].addr.indexOf($scope.searchCont.key) > 0) {
+      if ($scope.data[i].nm.indexOf($scope.searchCont.key) >= 0
+        || $scope.data[i].addr.indexOf($scope.searchCont.key) >= 0) {
         $scope.ItemArr2.push($scope.data[i]);
       }
     }
@@ -330,5 +330,5 @@ app.controller('TabsCtrl',function($rootScope, $state){
     console.log($scope.searchName)
     $scope.ItemArr2 = [];
   }
-});
+}]);
 
