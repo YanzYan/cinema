@@ -39,7 +39,12 @@ app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
       //存在跨域问题
       $http.get("https://m.maoyan.com/cinemas.json").success(function(response) {
         $scope.data = response.data;
-        //console.log(JSON.stringify(response.data));
+          $scope.value = [];
+          for(var i in response.data) {
+            //$scope.keys.push(i);
+            $scope.value.push(response.data[i]);
+          }
+        $scope.selectedSite = $scope.value[0];
       });
     }
     function getAddr(){
@@ -51,6 +56,7 @@ app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
         } else {
           alert('没有找到匹配的IP地址信息！');
         }
+        $ionicLoading.hide();
       });
     }
     $scope.getLocation = function(){
@@ -83,11 +89,12 @@ app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
   $http.get("https://m.maoyan.com/cinemas.json").success(function(response) {
     $scope.data = response.data;
   //  $scope.keys = [];
-  //  $scope.value = [];
-  //  for(var i in response.data){
-  //    $scope.keys.push(i);
-  //    $scope.value.push(response.data[i]);
-  //  }
+    $scope.value = [];
+    for(var i in response.data){
+      //$scope.keys.push(i);
+      $scope.value.push(response.data[i]);
+    }
+    $scope.selectedSite = $scope.value[0];
   });
   $scope.goCinemaDetail = function(id){
     $state.go('cinema-detail',{
@@ -120,8 +127,8 @@ app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
       .success(function(response){
         $scope.filmData = response.data.MovieDetailModel;
         //$scope.vd = $sce.getTrustedResourceUrl($scope.filmData.vd);
-        console.log($scope.filmData);
-        console.log($scope.filmData.dra);
+        //console.log($scope.filmData);
+        console.log($scope.filmData.vd);
         $ionicLoading.hide();
       })
       .error(function (mes) {
@@ -137,7 +144,11 @@ app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
     console.log($scope.id);
   }])
 
-  .controller('CinemaDetailCtrl', ['$scope', '$state', '$stateParams', '$ionicSlideBoxDelegate', '$http',function($scope, $state, $stateParams, $ionicSlideBoxDelegate, $http) {
+  .controller('CinemaDetailCtrl', ['$rootScope','$scope', '$state', '$stateParams', '$ionicSlideBoxDelegate', '$http',function($rootScope, $scope, $state, $stateParams, $ionicSlideBoxDelegate, $http) {
+    $rootScope.updateSwiper = function() {
+      mySwiper.update();
+    };
+    getData();
     $scope.slideIndex=0;
     $scope.slideChanged = function(index){
       $scope.slideIndex = index;
@@ -154,41 +165,27 @@ app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
     $scope.activeSlide = function(index){
       $ionicSlideBoxDelegate.slide(index);
     }
-    $scope.cinemaId = $stateParams.cinemaId;
-    //console.log($stateParams.cinemaId);
-    $scope.url = 'https://m.maoyan.com/showtime/wrap.json?cinemaid=' + $scope.cinemaId + '&movieid=';
-    $http.get($scope.url)
-      .success(function(response){
-        console.log(response.data);
-        $scope.cinema = response.data;
-        $scope.date = response.data.Dates;
-        $scope.movies = response.data.movies;
-          $scope.keys = [];
-          $scope.value = [];
-          $scope.movieValue = [];
-          for(var i in $scope.date){
-            $scope.keys.push(i);
-            $scope.value.push($scope.date[i]);
-          }
-        for(var i in $scope.movies){
-          //$scope.keys.push(i);
-          $scope.movieValue.push($scope.movies[i]);
-        }
-      })
-      .error(function (mes) {
 
-      })
-    $scope.choose = function(){
-      $scope.chooseclass = true;
+    function getData(){
+      $scope.cinemaId = $stateParams.cinemaId;
+      console.log($scope.cinemaId)
+      $scope.url = 'https://m.maoyan.com/showtime/wrap.json?cinemaid=' + $scope.cinemaId + '&movieid=';
+      //$scope.url = 'https://m.maoyan.com/movie/list.json?type=hot&offset=0&limit=3';
+      $http.get($scope.url)
+        .success(function(response){
+          $scope.cinema = response.data;
+          console.log(response)
+        })
+        //.error(function (mes) {
+        //  alert(mes)
+        //})
     }
-
   }])
 
-  .controller('FilmListCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate', '$http', '$stateParams',function($scope, $state, $ionicSlideBoxDelegate, $http, $stateParams) {
+  .controller('FilmListCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate', '$http', '$stateParams', '$ionicLoading',function($scope, $state, $ionicSlideBoxDelegate, $http, $stateParams,$ionicLoading) {
     $scope.$on('$ionicView.enter', function(e) {
-      getDate();
+      loading();
     });
-    console.log($stateParams.coming);
     if($stateParams.coming != undefined){
       $scope.hotClass=false;
       $scope.comingClass=true;
@@ -206,19 +203,32 @@ app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
         $scope.comingClass=true;
       }
     }
-    function getDate(){
+
+    function loading(){
+      $ionicLoading.show({
+        //template: '正在加载....',
+        template: '<ion-spinner icon="lines" class="spinner-calm"></ion-spinner>', //替换默认动画
+        //duration: 6500   //指定显示时长，后自动隐藏
+      });
+      getData();
+    }
+    function getData(){
       $http.get('https://m.maoyan.com/movie/list.json?type=hot&offset=0&limit=1000')
         .success(function(response){
           $scope.hot = response.data.movies;
+          $ionicLoading.hide();
+        })
+        .error(function (mes) {
+          $ionicLoading.hide();
         });
       $http.get('https://m.maoyan.com/movie/list.json?type=coming&offset=0&limit=1000')
         .success(function(response){
           $scope.coming = response.data.movies;
           //console.log(JSON.stringify($scope.coming));
-          //$ionicLoading.hide();
+          $ionicLoading.hide();
         })
         .error(function (mes) {
-          //$ionicLoading.hide();
+          $ionicLoading.hide();
         });
     }
     $scope.goDetail = function(id){
@@ -229,7 +239,6 @@ app.controller('TabsCtrl',['$rootScope', '$state',function($rootScope, $state){
   }])
 
   .controller('MineCtrl', ['$scope',function($scope) {
-
   }])
   .controller('FilmSearchCtrl', ['$scope','$http','$state',function($scope,$http,$state) {
     $scope.hot = [];

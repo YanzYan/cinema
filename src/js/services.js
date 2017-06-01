@@ -1,5 +1,9 @@
 //angular.module('starter.services', [])
-
+app.filter('to_trusted', ['$sce', function ($sce) {
+  return function (text) {
+    return $sce.trustAsHtml(text);
+  };
+}]);
 //app.factory('Chats', function() {
 //  // Might use a resource here that returns a JSON array
 //

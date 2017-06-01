@@ -33,5 +33,50 @@ app.directive('filmDate', function(){
         })
       }
     }
-  });
+  })
+
+.directive("swiperDirective", ["$rootScope", function($rootScope) {
+  return {
+    restrict: "A",
+    controller: function() {
+      this.ready = function() {
+        //$rootScope.updateSwiper();
+        mySwiper.update();
+      }
+    },
+    link: function(scope, element, attrs, ctrl) {
+      mySwiper = new Swiper(".swiper-container", {
+        loop: false,
+        pagination: '.swiper-pagination',
+        slidesPerView : 4.2,
+        centeredSlides : true,
+        //paginationClickable: true
+        onSlideChangeEnd: function(swiper){
+          console.log(swiper.activeIndex) //切换结束时，告诉我现在是第几个slide
+          scope.index = swiper.activeIndex;
+          //console.log(scope.index)
+        }
+      });
+      console.log(mySwiper);
+    }
+  }
+}])
+
+  .directive("swiperSlide", [function() {
+    return {
+      restrict: "A",
+      require: "^swiperDirective",
+      link: function(scope, element, attrs, ctrl) {
+        if (scope.$last) {
+          ctrl.ready();
+        }
+      }
+    }
+  }])
+
+.run(['$rootScope', function($rootScope) {
+  $rootScope.updateSwiper = function() {
+    mySwiper.update();
+  }
+}])
 
